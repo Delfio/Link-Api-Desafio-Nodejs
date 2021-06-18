@@ -4,9 +4,17 @@
   "description": "Desafio de conceitos Nodejs",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon . --inpsect ./src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Delfio Francisco",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "mongoose": "^5.12.14"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
 }
