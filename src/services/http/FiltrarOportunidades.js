@@ -16,60 +16,16 @@ class FiltrarOportunidades {
             const requisicao = request(this.#URL, (response) => {
                 const data = [];
                 response.on('data', ch => {
-                    if(response.statusCode > 300) {
-                        reject(ch.toString())
-                    } else {
-                        data.push(ch);
-                    } 
-                    
+                    data.push(ch);
                 });
                 
                 response.on('close', () => {
                     const body = JSON.parse(data.join(''));
 
-                    if(!body.data){
-                        resolv(null);
+                    if(response.statusCode > 300) {
+                        reject(body);
                     } else {
-                        
-                        const bodyFormatado = Array.from(body.data).map(el => {
-                            const {
-                                id,
-                                creator_user_id,
-                                user_id,
-                                person_id,
-                                org_id,
-                                stage_id,
-                                title,
-                                value,
-                                currency,
-                                add_time,
-                                active,
-                                deleted,
-                                status,
-                                pipeline_id,
-                                products_count
-                            } = el;
-
-                            return {
-                                id,
-                                creator_user_id: creator_user_id.id,
-                                user_id: user_id.id,
-                                person_id: person_id.owner_id,
-                                org_id: org_id.owner_id,
-                                stage_id,
-                                title,
-                                value,
-                                currency,
-                                add_time,
-                                active,
-                                deleted,
-                                status,
-                                pipeline_id,
-                                products_count
-                            }
-                        })
-    
-                        resolv(bodyFormatado)
+                        resolv(body);
                     }
                 })
 
