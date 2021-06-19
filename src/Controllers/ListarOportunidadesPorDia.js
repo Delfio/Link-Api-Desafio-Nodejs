@@ -1,4 +1,4 @@
-const BuscarUmAgrupamentoDeOportunidades = require('../services/BuscarUmAgrupamentoDeOportunidades');
+const BuscarUmAgrupamentoDeOportunidades = require('../services/database/BuscarUmAgrupamentoDeOportunidades');
 const AppError = require('../utils/AppError');
 
 class ListOportunidadesPorDia {

@@ -1,4 +1,4 @@
-const AgrupamentoDeOportunidades = require('../database/models/AgrupamentoDeOportunidades.model');
+const AgrupamentoDeOportunidades = require('../../database/models/AgrupamentoDeOportunidades.model');
 
 class BuscarUmAgrupamentoDeOportunidades{
     #AgrupamentoDeOportunidades;

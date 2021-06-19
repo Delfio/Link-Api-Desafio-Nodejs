@@ -5,7 +5,6 @@ class Logger {
   #pathPadraoLogger;
   constructor() {
     this.#pathPadraoLogger = path.resolve(__dirname, "..", "..", "temp");
-    console.log("path padrão -", this.#pathPadraoLogger);
   }
 
   #formatarData() {

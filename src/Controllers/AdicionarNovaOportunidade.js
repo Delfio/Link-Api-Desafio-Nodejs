@@ -1,34 +1,27 @@
-const AgrupamentoDeOportunidades = require('../Database/schemas/AgrupamentoDeOportunidades');
-
+const AgruparOportunidades = require('../services/database/AgruparOportunidades');
+const OportunidadeEntity = require('../entities/Oportunidade');
+const AppError = require('../utils/AppError');
 
 class AdicionarNovaOportunidade {
+    #agruparOportunidades;
+    constructor(){
+        this.#agruparOportunidades = new AgruparOportunidades();
+    }
+
     async Executar(oportunidade) {
-        const startDay = new Date().setHours(0, 0, 0, 0);
-        const endDay = new Date().setHours(23, 59, 59, 59);
-        
-        const query = {
-            "data": {
-                "$gte": new Date(startDay),
-                "$lt": new Date(endDay),
-            }
+        try {
+            const Oportunidade = new OportunidadeEntity(oportunidade);
+
+            const {error, valid} = Oportunidade.entidadeValida();
+
+            if(!valid) {
+                throw new AppError(`Parâmetrosd inválidos para adicionar uma nova oportunidade. ${error}`, 400);
+            };
+
+            this.#agruparOportunidades.Executar({oportunidade, data: new Date()})
+        } catch(err) {
+
         }
-
-        return AgrupamentoDeOportunidades.findOne(query).then(resu => {
-            if(!resu) {
-                const novaOportunidade = {
-                    data: new Date(),
-                    total: oportunidade.value,
-                    contente: [oportunidade]
-                }
-                return AgrupamentoDeOportunidades.create(novaOportunidade)
-            }
-
-            resu.contente.push(oportunidade);
-            resu.total = (resu.total + oportunidade.value);
-
-            return resu.save();
-        })
-        
     }
 }
 
