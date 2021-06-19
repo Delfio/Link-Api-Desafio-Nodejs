@@ -1,37 +1,31 @@
-const { createServer } = require('http');
-const ListarOportunidades = require('./Controllers/ListarOportunidadesPorDia');
-const Connection = require('./Database/connection');
+const { createServer } = require("http");
+const Connection = require("./Database/connection");
+const routes = require('./routes');
+
 /**
- * get / -> all
+ * get /oportunidades -> all
  *      headers :
  *          date: data de filtro
  *          from: 0
  *          at: 50
+ *
  */
-
 
 new Connection();
 
 const PORT = process.env.PORT || 3333;
+const DEFAULT_HEADER = { "Content-type": "application/json" };
 
-const ab = new ListarOportunidades();
 
 const handle = async (request, response) => {
-    const {date, from, to} = request.headers;
+  const { url, method } = request;
 
-    ab.test().then(el => console.log(el));
+  const key = `${url}:${method.toLowerCase()}`;
+  const chosen = routes[key] || routes["default"];
 
-    console.log(date, from, to)
-
-    const res = {
-        ok: true
-    };
-
-    response.write(JSON.stringify(res));
-
-    response.end();
-
-}
+  response.writeHead(200, DEFAULT_HEADER);
+  return chosen(request, response);
+};
 
 const server = createServer((req, res) => handle(req, res));
 
