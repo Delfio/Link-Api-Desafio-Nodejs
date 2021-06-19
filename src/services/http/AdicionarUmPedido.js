@@ -1,17 +1,14 @@
-const FormatarUrlBling = require('../../utils/FormatarUrlBling');
-const { request } = require('https');
+const BaseURLBling = require('../../utils/FormatarUrlBling');
 
 class AdicionarUmPedido {
-    #URL;
-    constructor() {
-        this.#URL = new URL(FormatarUrlBling('pedido'));
-    }
 
     async Executar(data) {
-        return new Promise((resolv, reject) => {
-            const urlFormatada = this.#URL.searchParams.set('xml', data);
-
-            
+        return BaseURLBling.post('/pedido', null, {
+            params: {
+                xml: data
+            }
         })
     }
 }
+
+module.exports = AdicionarUmPedido;

@@ -2,6 +2,7 @@ const ListarOportunidades = require("./controllers/ListarOportunidadesPorDia");
 const AdicionarNovaOportunidade = require("./controllers/AdicionarNovaOportunidade");
 const OportunidadeEntity = require("./entities/Oportunidade");
 const Logger = require("./utils/Logger");
+const RegistrarOportunidade = require('./controllers/RegistrarOportunides');
 
 const DEFAULT_HEADER = { "Content-type": "application/json" };
 
@@ -79,22 +80,19 @@ function postOportunidade(req, res) {
   });
 }
 
-function teste(req, res) {
-  // const buscarUmaOportunidadeTeste = new BuscarUmaOportunidadeTeste();
-  // return buscarUmaOportunidadeTeste.Executar()
-  // .then((response) => {
-  //   res.end(response)
-  // })
-  // .catch(err => {
-  //   res.writeHead(400, DEFAULT_HEADER);
-  //   res.end(err)
-  // })
+function RealizarIntegracao(req, res) {
+  const registrarOportunidade = new RegistrarOportunidade()
+
+  registrarOportunidade
+    .Executar()
+    .then(() => res.end())
+
 }
 
 const routes = {
   "/oportunidades:get": getOportunidades,
   "/oportunidades:post": postOportunidade,
-  "/teste:get": teste,
+  "/realizarIntegracao:get": RealizarIntegracao,
   default: (req, res) => {
     res.write("Hello !");
     res.end();
