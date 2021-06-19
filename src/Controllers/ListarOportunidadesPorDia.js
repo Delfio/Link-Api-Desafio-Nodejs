@@ -1,16 +1,16 @@
-const AgrupamentoDeOportunidades = require('../Database/schemas/AgrupamentoDeOportunidades');
+const BuscarUmAgrupamentoDeOportunidades = require('../services/BuscarUmAgrupamentoDeOportunidades');
+const AppError = require('../utils/AppError');
 
 class ListOportunidadesPorDia {
-    async Executar(dia = new Date()) {
-        const startDay = new Date(dia).setHours(0, 0, 0, 0);
-        const endDay = new Date(dia).setHours(23, 59, 59, 59);
+    async Executar(dataFiltro) {
 
-        return AgrupamentoDeOportunidades.findOne({
-            "data": {
-                "$gte": new Date(startDay),
-                "$lt": new Date(endDay),
-            }
-        });
+        const buscarUmAgrupamentoDeOportunidades = new BuscarUmAgrupamentoDeOportunidades();
+
+        try{
+            return buscarUmAgrupamentoDeOportunidades.Executar(dataFiltro);
+        } catch(err) {
+            throw new AppError(`Erro ao filtrar as oportunidades ${err.message}`, 400);
+        }
     }
 }
 

@@ -1,16 +1,14 @@
 const { request } = require('https');
 const FormatarUrl = require('../utils/FormatarUrlPipeDrive');
 
-
-// Teste
-const DEFAULT_URL = FormatarUrl('activities');
-
-
 class BuscarUmaOportunidade {
+    #DEFAULT_URL;
+    constructor() {
+        this.#DEFAULT_URL = FormatarUrl('activities');
+    }
     async Executar() {
-
         return new Promise((resolve, reject) => {
-            const res = request(DEFAULT_URL, (resp) => {
+            const res = request(this.#DEFAULT_URL, (resp) => {
 
                 resp.on('data', ch => {
                     if(resp.statusCode > 300) {
