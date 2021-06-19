@@ -1,4 +1,5 @@
-const TesteSchema = require('../Database/schemas/Oportunidades');
+const AgrupamentoDeOportunidades = require('../Database/schemas/AgrupamentoDeOportunidades');
+
 
 class AdicionarNovaOportunidade {
     async Executar(oportunidade) {
@@ -12,14 +13,14 @@ class AdicionarNovaOportunidade {
             }
         }
 
-        return TesteSchema.findOne(query).then(resu => {
+        return AgrupamentoDeOportunidades.findOne(query).then(resu => {
             if(!resu) {
-                const newTeste = {
+                const novaOportunidade = {
                     data: new Date(),
                     total: oportunidade.value,
                     contente: [oportunidade]
                 }
-                return TesteSchema.create(newTeste)
+                return AgrupamentoDeOportunidades.create(novaOportunidade)
             }
 
             resu.contente.push(oportunidade);

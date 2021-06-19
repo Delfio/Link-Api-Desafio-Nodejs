@@ -24,7 +24,4 @@ const OportunidadeSchema = new mongoose.Schema({
       products_count: Number,
 });
 
-module.exports = {
-    OportunidadeModel:  mongoose.model('Oportunidade', OportunidadeSchema),
-    OportunidadeSchema
-};
+module.exports = OportunidadeSchema;

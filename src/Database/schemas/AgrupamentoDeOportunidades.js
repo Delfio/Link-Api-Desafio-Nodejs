@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const {OportunidadeSchema} = require('./Oportunidade');
+const OportunidadeSchema = require('./Oportunidade');
 
-const TesteSchema = new mongoose.Schema({
+const AgrupamentoDeOportunidades = new mongoose.Schema({
     data: {
         type: Date,
         require: true,
@@ -15,4 +15,4 @@ const TesteSchema = new mongoose.Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('OportunidadesAgrupadas', TesteSchema);
+module.exports = mongoose.model('OportunidadesAgrupadas', AgrupamentoDeOportunidades);
