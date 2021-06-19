@@ -25,6 +25,6 @@ const OportunidadeSchema = new mongoose.Schema({
 });
 
 module.exports = {
-    OportunidadeModel:  mongoose.model('Teste', OportunidadeSchema),
+    OportunidadeModel:  mongoose.model('Oportunidade', OportunidadeSchema),
     OportunidadeSchema
 };

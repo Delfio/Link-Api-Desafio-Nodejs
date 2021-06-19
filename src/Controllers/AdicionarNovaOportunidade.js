@@ -2,7 +2,8 @@ const TesteSchema = require('../Database/schemas/Oportunidades');
 
 class AdicionarNovaOportunidade {
     async Executar(oportunidade) {
-        const dataAtual = new Date().setHours(0,0,0,0);
+        const startDay = new Date().setHours(0, 0, 0, 0);
+        const endDay = new Date().setHours(23, 59, 59, 59);
         
         const query = {
             "data": {
@@ -14,16 +15,17 @@ class AdicionarNovaOportunidade {
         return TesteSchema.findOne(query).then(resu => {
             if(!resu) {
                 const newTeste = {
-                    data: new Date(dataAtual),
-                    total: value,
-                    contente: [...oportunidade]
+                    data: new Date(),
+                    total: oportunidade.value,
+                    contente: [oportunidade]
                 }
                 return TesteSchema.create(newTeste)
             }
 
             resu.contente.push(oportunidade);
+            resu.total = (resu.total + oportunidade.value);
 
-            resu.total = (resu.total + value);
+            return resu.save();
         })
         
     }

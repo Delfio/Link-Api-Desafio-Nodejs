@@ -15,4 +15,4 @@ const TesteSchema = new mongoose.Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('Teste', TesteSchema);
+module.exports = mongoose.model('OportunidadesAgrupadas', TesteSchema);
