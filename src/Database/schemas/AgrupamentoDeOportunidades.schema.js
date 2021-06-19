@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const OportunidadeSchema = require('./Oportunidade');
+const OportunidadeSchema = require('./Oportunidade.schema');
 
 const AgrupamentoDeOportunidades = new mongoose.Schema({
     data: {
@@ -15,4 +15,4 @@ const AgrupamentoDeOportunidades = new mongoose.Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('OportunidadesAgrupadas', AgrupamentoDeOportunidades);
+module.exports = AgrupamentoDeOportunidades;
