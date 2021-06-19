@@ -14,15 +14,20 @@ class FiltrarOportunidades {
             this.#URL.searchParams.append('status', businessStatus);
 
             const requisicao = request(this.#URL, (response) => {
+                const data = [];
                 response.on('data', ch => {
                     if(response.statusCode > 300) {
                         reject(ch.toString())
                     } else {
-                        resolv(ch.toString())
+                        data.push(ch);
                     } 
                     
                 });
-            
+                
+                response.on('close', () => {
+                    resolv(data.join(''))
+                })
+
                 response.on('error', (err) => {
                     console.log('erro ', err);
                     reject(err)
