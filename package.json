@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^10.0.0",
+    "jstoxml": "^2.0.6",
     "mongoose": "^5.12.14"
   },
   "devDependencies": {
