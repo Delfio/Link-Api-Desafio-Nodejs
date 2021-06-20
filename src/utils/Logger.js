@@ -10,6 +10,14 @@ class Logger {
   #formatarData() {
     return new Date()
       .toLocaleDateString("pt-br", {
+        dateStyle: "short"
+      })
+      .replace(/\//g, "-")
+  }
+
+  #formatarCabecalho() {
+    return new Date()
+      .toLocaleDateString("pt-br", {
         dateStyle: "short",
         timeStyle: "medium",
       })
@@ -18,11 +26,12 @@ class Logger {
   }
 
   async gravarLog(log) {
-    const cabecalho = this.#formatarData();
+    const cabecalho = this.#formatarCabecalho();
+    const file = this.#formatarData();
 
     const pathFormatado = path.resolve(
       this.#pathPadraoLogger,
-      `log-${cabecalho.trim()}.log`
+      `log-${file.trim()}.log`
     );
 
     const novoLog = `[${cabecalho}] : ${log}\n`;

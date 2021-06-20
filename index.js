@@ -1,20 +1,39 @@
-require('dotenv/config');
-require('./src/server')
-const path = require('path');
+require("dotenv/config");
+require("./src/server");
+const path = require("path");
+const RegistrarLog = require("./src/utils/Logger");
 
-const { Worker, isMainThread } = require('worker_threads');
+const { Worker, isMainThread } = require("worker_threads");
 
-if(isMainThread) {
+if (process.env.NODE_ENV === "production") {
+  if (isMainThread) {
     let worker = null;
+    const registrarLog = new RegistrarLog();
 
-    const pathWorker = path.resolve(__dirname, 'src', 'worker.js');
+    const pathWorker = path.resolve(__dirname, "src", "worker.js");
 
     worker = new Worker(pathWorker);
 
-    worker.postMessage('start');
+    worker.postMessage("start");
 
-    worker.on('message', msg => console.log(`mensagem vinda do worker - ${msg}`))
-    worker.on('error', err => console.log(`worker com erro ${err}`));
-    worker.on('exit', _ => console.log('worker morto'));
-    worker.on('messageerror', (er) => console.log(er))
+    worker.on("message", (msg) => {
+      console.log(`mensagem vinda do worker - ${msg}`);
+      registrarLog.gravarLog(
+        JSON.stringify({
+          operacao: `Realizando integração automática ${msg}`
+        })
+      );
+    });
+
+    worker.on("exit", (_) => {
+      registrarLog.gravarLog(
+        JSON.stringify({
+          operacao: "Worker de integração finalizado",
+          data: new Date().toLocaleDateString(),
+        })
+      );
+    });
+
+    worker.on("messageerror", (er) => console.log(er));
+  }
 }

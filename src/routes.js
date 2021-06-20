@@ -2,7 +2,7 @@ const ListarOportunidades = require("./controllers/ListarOportunidadesPorDia");
 const AdicionarNovaOportunidade = require("./controllers/AdicionarNovaOportunidade");
 const OportunidadeEntity = require("./entities/Oportunidade");
 const Logger = require("./utils/Logger");
-const RegistrarOportunidade = require('./controllers/RegistrarOportunides');
+const RegistrarOportunidade = require("./controllers/RegistrarOportunides");
 
 const DEFAULT_HEADER = { "Content-type": "application/json" };
 
@@ -21,10 +21,20 @@ function getOportunidades(req, res) {
     })
   );
 
-  return listarOportunidades.Executar(date).then((result) => {
-    res.write(JSON.stringify(result));
-    res.end();
-  });
+  return listarOportunidades
+    .Executar(date)
+    .then((result) => {
+      res.write(JSON.stringify(result));
+      res.end();
+    })
+    .catch((err) => {
+      res.writeHead(400, DEFAULT_HEADER);
+      res.write(
+        JSON.stringify({
+          error: err,
+        })
+      );
+    });
 }
 
 function postOportunidade(req, res) {
@@ -51,7 +61,7 @@ function postOportunidade(req, res) {
         JSON.stringify({
           operacao: "Post Oportunidades",
           error: errorFormated,
-          data: body
+          data: body,
         })
       );
 
@@ -59,13 +69,13 @@ function postOportunidade(req, res) {
     }
 
     const adicionarNovaOportunidade = new AdicionarNovaOportunidade();
-    
+
     log.gravarLog(
-        JSON.stringify({
-          operacao: "Post Oportunidades",
-          data: body
-        })
-      );
+      JSON.stringify({
+        operacao: "Post Oportunidades",
+        data: body,
+      })
+    );
     return adicionarNovaOportunidade
       .Executar(body)
       .then(() => res.end())
@@ -81,12 +91,16 @@ function postOportunidade(req, res) {
 }
 
 function RealizarIntegracao(req, res) {
-  const registrarOportunidade = new RegistrarOportunidade()
+  const registrarOportunidade = new RegistrarOportunidade();
+  const log = new Logger();
+  registrarOportunidade.Executar().then(() => res.end());
 
-  registrarOportunidade
-    .Executar()
-    .then(() => res.end())
-
+  log.gravarLog(
+    JSON.stringify({
+      operacao: "Realizando integração manualmente",
+      data: new Date().toISOString(),
+    })
+  );
 }
 
 const routes = {
