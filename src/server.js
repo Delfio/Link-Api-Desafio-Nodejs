@@ -2,15 +2,6 @@ const { createServer } = require("http");
 const Connection = require("./Database/connection");
 const routes = require('./routes');
 
-/**
- * get /oportunidades -> all
- *      headers :
- *          date: data de filtro
- *          from: 0
- *          at: 50
- *
- */
-
 new Connection();
 
 const PORT = process.env.PORT || 3333;

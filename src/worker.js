@@ -1,10 +1,10 @@
 const { parentPort } = require("worker_threads");
 const Database = require("./database/connection");
-const RegistrarOportunidades = require('./controllers/RegistrarOportunides');
+const RegistrarOportunidadesBuilders = require('./builders/RegistrarOportunidadesBuilders');
 
 new Database();
 
-const registrarOportunidades = new RegistrarOportunidades();
+const registrarOportunidades = RegistrarOportunidadesBuilders();
 
 async function recursive() {
     return registrarOportunidades.Executar()

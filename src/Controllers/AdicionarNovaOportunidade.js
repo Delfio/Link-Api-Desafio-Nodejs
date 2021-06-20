@@ -1,11 +1,10 @@
-const AgruparOportunidades = require('../services/database/AgruparOportunidades');
 const OportunidadeEntity = require('../entities/Oportunidade');
 const AppError = require('../utils/AppError');
 
 class AdicionarNovaOportunidade {
     #agruparOportunidades;
-    constructor(){
-        this.#agruparOportunidades = new AgruparOportunidades();
+    constructor({agruparOportunidades}){
+        this.#agruparOportunidades = agruparOportunidades;
     }
 
     async Executar(oportunidade) {

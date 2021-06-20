@@ -1,13 +1,14 @@
-const ListarOportunidades = require("./controllers/ListarOportunidadesPorDia");
-const AdicionarNovaOportunidade = require("./controllers/AdicionarNovaOportunidade");
+const ListarOportunidadesBuilders = require("./builders/ListarOportunidadesPorDiaBuilder");
+const AdicionarNovaOportunidadeBuilder = require("./builders/AdicionarNovaOportunidadeBuilder");
+const RegistrarOportunidadesBuilders = require("./builders/RegistrarOportunidadesBuilders");
+
 const OportunidadeEntity = require("./entities/Oportunidade");
 const Logger = require("./utils/Logger");
-const RegistrarOportunidade = require("./controllers/RegistrarOportunides");
 
 const DEFAULT_HEADER = { "Content-type": "application/json" };
 
 function getOportunidades(req, res) {
-  const listarOportunidades = new ListarOportunidades();
+  const listarOportunidades = ListarOportunidadesBuilders();
   const log = new Logger();
 
   const date = req.headers["date"]
@@ -68,7 +69,7 @@ function postOportunidade(req, res) {
       return;
     }
 
-    const adicionarNovaOportunidade = new AdicionarNovaOportunidade();
+    const adicionarNovaOportunidade = AdicionarNovaOportunidadeBuilder();
 
     log.gravarLog(
       JSON.stringify({
@@ -91,7 +92,7 @@ function postOportunidade(req, res) {
 }
 
 function RealizarIntegracao(req, res) {
-  const registrarOportunidade = new RegistrarOportunidade();
+  const registrarOportunidade = RegistrarOportunidadesBuilders();
   const log = new Logger();
   registrarOportunidade.Executar().then(() => res.end());
 

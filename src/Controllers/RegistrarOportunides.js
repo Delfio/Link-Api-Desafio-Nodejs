@@ -1,7 +1,3 @@
-const FiltrarOportunidades = require("../services/http/FiltrarOportunidades");
-const AgruparOportunidades = require("../services/database/AgruparOportunidades");
-const AdicionarUmPedido = require("../services/http/AdicionarUmPedido");
-
 const ConverterOportunidadeEmPedido = require("../utils/ConverterOportunidadeEmPedido");
 const ReduzirInformacoesDaOportunidade = require("../utils/ReduzirInformacoesDaOportunidade");
 
@@ -9,10 +5,10 @@ class RegistrarOportunides {
   #filtrarOportunidades;
   #agruparOportunidades;
   #adicionarUmPedido;
-  constructor() {
-    this.#agruparOportunidades = new AgruparOportunidades();
-    this.#filtrarOportunidades = new FiltrarOportunidades();
-    this.#adicionarUmPedido = new AdicionarUmPedido();
+  constructor({agruparOportunidades, filtrarOportunidades, adicionarUmPedido}) {
+    this.#agruparOportunidades = agruparOportunidades;
+    this.#filtrarOportunidades = filtrarOportunidades;
+    this.#adicionarUmPedido = adicionarUmPedido;
   }
 
   async Executar() {
