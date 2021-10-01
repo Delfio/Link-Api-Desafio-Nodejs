@@ -22,7 +22,7 @@ class Oportunidade {
   entidadeValida() {
     const todasAsPropriedades = Object.getOwnPropertyNames(this);
     const propriedadesInvalidas = todasAsPropriedades
-        .filter(prop => this[prop] === "undefined" || this[prop] === "null")
+        .filter(prop => this[prop] === undefined || this[prop] === null)
         .map(prop => `campo [${prop}] inválido(a)`);
     
     return {
